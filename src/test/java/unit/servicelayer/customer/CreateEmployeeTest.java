@@ -47,7 +47,7 @@ public class CreateEmployeeTest {
         //   whose 'lastname' == lastName
         verify(storageMock, times(1))
                 .createEmployee(
-                        argThat(x -> x.firstname.equals(firstName) &&
+                        argThat(x -> x.equals(firstName) &&
                                 x.lastname.equals(lastName)));
     }
 }

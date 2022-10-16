@@ -1,6 +1,7 @@
 package servicelayer.booking;
 
 import datalayer.customer.BookingStorage;
+import dto.BookingCreation;
 import dto.BookingStorageException;
 
 import java.util.Collection;
@@ -14,7 +15,7 @@ public class BookingServiceImpl implements BookingService{
     @Override
     public int createBooking(int customerId, int employeeId, String date, String time, String end) throws BookingServiceException {
         try {
-            return bookingStorage.createBooking(customerId, employeeId, date, time,end);
+            return bookingStorage.createBooking(new BookingCreation(customerId, employeeId, date, time,end));
         } catch (Exception e) {
             throw new BookingServiceException(e.getMessage());
         } catch (BookingStorageException e) {

@@ -1,6 +1,7 @@
 package datalayer.customer;
 
 import dto.Booking;
+import dto.BookingCreation;
 import dto.BookingStorageException;
 
 import java.sql.Connection;
@@ -25,16 +26,16 @@ public class BookingStorageImpl implements BookingStorage {
     }
 
     @Override
-    public int createBooking(int customerId, int employeeId, String date, String start,String end) throws BookingStorageException {
+    public int createBooking(BookingCreation bookingCreation) throws BookingStorageException {
         var sql = "INSERT INTO Booking (customerId, employeeId, date, start,end) VALUES (?, ?, ?, ?,?)";
         try (var connection = getConnection();
              var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.setInt(1, customerId);
-            preparedStatement.setInt(2, employeeId);
-            preparedStatement.setString(3, date);
-            preparedStatement.setString(4, start);
-            preparedStatement.setString(5, end);
+            preparedStatement.setInt(1, bookingCreation.customerId);
+            preparedStatement.setInt(2, bookingCreation.employeeId);
+            preparedStatement.setString(3, bookingCreation.date);
+            preparedStatement.setString(4, bookingCreation.start);
+            preparedStatement.setString(5, bookingCreation.end);
             preparedStatement.execute();
             try (var resultSet = preparedStatement.getGeneratedKeys()) {
                 resultSet.next();

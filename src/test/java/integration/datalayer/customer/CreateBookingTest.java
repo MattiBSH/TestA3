@@ -2,6 +2,7 @@ package integration.datalayer.customer;
 
 import datalayer.customer.BookingStorage;
 import datalayer.customer.BookingStorageImpl;
+import dto.BookingCreation;
 import dto.BookingStorageException;
 import dto.CustomerCreation;
 import integration.ContainerizedDbIntegrationTest;
@@ -28,7 +29,7 @@ public class CreateBookingTest extends ContainerizedDbIntegrationTest {
 
     @Test
     public void mustSaveBooking() throws SQLException, BookingStorageException {
-        int bookingId=bookingStorage.createBooking(1, 1, "2021-01-02","16","17");
+        int bookingId=bookingStorage.createBooking(new BookingCreation(1, 1, "2021-01-02","16","17"));
         var bookings = bookingStorage.getBookingsForCustomer(1);
         assertTrue(bookings.stream().anyMatch(x -> x.getId() == bookingId));
     }
@@ -37,8 +38,8 @@ public class CreateBookingTest extends ContainerizedDbIntegrationTest {
     public void mustReturnLatestId() throws SQLException, BookingStorageException {
         // Arrange
         // Act
-        var id1 = bookingStorage.createBooking(1, 1, "2021-01-02","16","17");
-        var id2 = bookingStorage.createBooking(1, 1, "2021-01-02","16","17");
+        var id1 = bookingStorage.createBooking(new BookingCreation(1, 1, "2021-01-02","16","17"));
+        var id2 = bookingStorage.createBooking(new BookingCreation(1, 1, "2021-01-02","16","17"));
 
         // Assert
         assertEquals(1, id2 - id1);
