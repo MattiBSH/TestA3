@@ -6,6 +6,7 @@ import dto.BookingStorageException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +25,23 @@ public class BookingStorageImpl implements BookingStorage {
     }
 
     @Override
-    public void createBooking(int customerId, int employeeId, String date, String time,String end) throws BookingStorageException {
-        var sql = "INSERT INTO Booking (customerId, employeeId, date, time,end) VALUES (?, ?, ?, ?)";
+    public int createBooking(int customerId, int employeeId, String date, String start,String end) throws BookingStorageException {
+        var sql = "INSERT INTO Booking (customerId, employeeId, date, start,end) VALUES (?, ?, ?, ?,?)";
         try (var connection = getConnection();
-             var preparedStatement = connection.prepareStatement(sql)) {
+             var preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
             preparedStatement.setInt(1, customerId);
             preparedStatement.setInt(2, employeeId);
             preparedStatement.setString(3, date);
-            preparedStatement.setString(4, time);
+            preparedStatement.setString(4, start);
+            preparedStatement.setString(5, end);
             preparedStatement.execute();
+            try (var resultSet = preparedStatement.getGeneratedKeys()) {
+                resultSet.next();
+                int newId = resultSet.getInt(1);
+                return newId;
+            }
+
         } catch (Exception e) {
             throw new BookingStorageException(e.getMessage());
         }
@@ -50,9 +59,9 @@ public class BookingStorageImpl implements BookingStorage {
                     var id = resultSet.getInt("id");
                     var employeeId = resultSet.getInt("employeeId");
                     var date = resultSet.getString("date");
-                    var time = resultSet.getString("time");
+                    var start = resultSet.getString("start");
                     var end = resultSet.getString("end");
-                    var booking = new Booking(id, customerId, employeeId, date, time,end);
+                    var booking = new Booking(id, customerId, employeeId, date, start,end);
                     bookingList.add(booking);
                 }
                 return bookingList;
@@ -74,9 +83,9 @@ public class BookingStorageImpl implements BookingStorage {
                     var id = resultSet.getInt("id");
                     var customerId = resultSet.getInt("customerId");
                     var date = resultSet.getString("date");
-                    var time = resultSet.getString("time");
+                    var start = resultSet.getString("start");
                     var end = resultSet.getString("end");
-                    var booking = new Booking(id, customerId, employeeId, date, time,end);
+                    var booking = new Booking(id, customerId, employeeId, date, start,end);
                     bookingList.add(booking);
                 }
                 return bookingList;

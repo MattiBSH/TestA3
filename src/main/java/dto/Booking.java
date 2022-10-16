@@ -16,4 +16,28 @@ public class Booking {
         this.start= start;
         this.end= end;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public int getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public String getEnd() {
+        return end;
+    }
 }
