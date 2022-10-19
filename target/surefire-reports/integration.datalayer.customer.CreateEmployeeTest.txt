@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: integration.datalayer.customer.CreateEmployeeTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.141 s <<< FAILURE! - in integration.datalayer.customer.CreateEmployeeTest
+integration.datalayer.customer.CreateEmployeeTest  Time elapsed: 0.141 s  <<< ERROR!
+org.flywaydb.core.api.FlywayException: 
+Validate failed: 
+Detected failed migration to version 3 (create table Bookings). Please remove any half-completed changes then run repair to fix the schema history.
+
+	at integration.datalayer.customer.CreateEmployeeTest.Setup(CreateEmployeeTest.java:25)
+

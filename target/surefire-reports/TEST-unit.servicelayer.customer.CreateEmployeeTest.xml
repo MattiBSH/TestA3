@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="integration.servicelayer.customer.SomeOtherIntegrationTest" time="0.137" tests="1" errors="1" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="unit.servicelayer.customer.CreateEmployeeTest" time="0.028" tests="1" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -57,14 +57,21 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="" classname="integration.servicelayer.customer.SomeOtherIntegrationTest" time="0.137">
-    <error type="org.flywaydb.core.api.FlywayException"><![CDATA[org.flywaydb.core.api.FlywayException: 
-Validate failed: 
-Detected failed migration to version 3 (create table Bookings). Please remove any half-completed changes then run repair to fix the schema history.
+  <testcase name="mustCallStorageWhenCreatingCustomer" classname="unit.servicelayer.customer.CreateEmployeeTest" time="0.016">
+    <failure type="org.mockito.exceptions.verification.opentest4j.ArgumentsAreDifferent"><![CDATA[org.mockito.exceptions.verification.opentest4j.ArgumentsAreDifferent: 
 
-	at integration.servicelayer.customer.SomeOtherIntegrationTest.setup(SomeOtherIntegrationTest.java:26)
-]]></error>
-    <system-err><![CDATA[[main] INFO org.flywaydb.core.internal.database.base.DatabaseType - Database: jdbc:mysql://127.0.0.1:3306/ (MySQL 8.0)
-]]></system-err>
+Argument(s) are different! Wanted:
+employeeStorage.createEmployee(
+    <Create employee test$$ lambda$ 4 2 5/ 0x 0 0 0 0 0 0 0 8 0 0ef 5d 1 8>
+);
+-> at unit.servicelayer.customer.CreateEmployeeTest.mustCallStorageWhenCreatingCustomer(CreateEmployeeTest.java:49)
+Actual invocations have different arguments:
+employeeStorage.createEmployee(
+    dto.EmployeeCreation@64508788
+);
+-> at servicelayer.employee.EmployeeServiceImpl.employeeCreation(EmployeeServiceImpl.java:20)
+
+	at unit.servicelayer.customer.CreateEmployeeTest.mustCallStorageWhenCreatingCustomer(CreateEmployeeTest.java:49)
+]]></failure>
   </testcase>
 </testsuite>

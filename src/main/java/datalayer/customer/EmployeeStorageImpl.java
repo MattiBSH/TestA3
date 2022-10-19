@@ -21,7 +21,7 @@ public class EmployeeStorageImpl implements EmployeeStorage{
 
     @Override
     public Employee getEmployeeWithId(int employeeId) throws SQLException {
-        var sql = "select ID, firstname, lastname, birthdate from Employees where id = ?";
+        var sql = "select ID, firstname, lastname from Employees where id = ?";
         try (var con = getConnection();
              var stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, employeeId);
