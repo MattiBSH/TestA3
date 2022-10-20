@@ -23,7 +23,7 @@ public class CreateEmployeeTest extends ContainerizedDbIntegrationTest {
     @BeforeAll
     public void Setup() throws SQLException {
 
-        runMigration(2);
+        runMigration(3);
         employeeStorage = new EmployeeStorageImpl(getConnectionString(), "root", getDbPassword());
     }
 

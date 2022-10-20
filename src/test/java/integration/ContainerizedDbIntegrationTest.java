@@ -39,6 +39,7 @@ public class ContainerizedDbIntegrationTest {
                         .target(Double.toString(level))
                         .dataSource(url, "root", PASSWORD)
         );
+        flyway.repair();
         flyway.migrate();
     }
 

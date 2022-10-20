@@ -25,7 +25,7 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
 
     @BeforeAll
     public void Setup() throws SQLException {
-        runMigration(3);
+        runMigration(4);
 
         customerStorage = new CustomerStorageImpl(getConnectionString(), "root", getDbPassword());
 
@@ -38,7 +38,7 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     private void addFakeCustomers(int numCustomers) throws SQLException {
         Faker faker = new Faker();
         for (int i = 0; i < numCustomers; i++) {
-            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName());
+            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName(),faker.phoneNumber().toString());
             customerStorage.createCustomer(c);
         }
 
@@ -48,7 +48,7 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     public void mustSaveCustomerInDatabaseWhenCallingCreateCustomer() throws SQLException {
         // Arrange
         // Act
-        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn"));
+        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn","12345678"));
 
         // Assert
         var customers = customerStorage.getCustomers();
@@ -62,8 +62,8 @@ class CreateCustomerTest extends ContainerizedDbIntegrationTest {
     public void mustReturnLatestId() throws SQLException {
         // Arrange
         // Act
-        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b"));
-        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d"));
+        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b","123213"));
+        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d","123213"));
 
         // Assert
         assertEquals(1, id2 - id1);
