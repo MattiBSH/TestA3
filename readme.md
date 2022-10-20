@@ -1,3 +1,5 @@
+Made by Matti Hansen, Mads bryde og Jacob Simonsen
+
 * First get mysql server (we used docker)
   * depending on what OS you are using, you may need to install it differently
   * Port forwarding/opening in some cases 
